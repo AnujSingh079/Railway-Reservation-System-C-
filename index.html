@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railway Reservation System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="container">
+    <header class="hero">
+        <p class="tag">C LANGUAGE PROJECT</p>
+        <h1>Railway Reservation System</h1>
+        <p>A simple reservation system demonstrating structures, functions, loops, conditions, switch-case and file handling in C.</p>
+    </header>
+
+    <section class="card">
+        <h2>Book a Ticket</h2>
+        <form id="bookingForm">
+            <div class="grid">
+                <label>Passenger ID
+                    <input id="passengerID" type="number" min="1" required>
+                </label>
+                <label>Train Number
+                    <input id="trainNumber" type="number" min="1" required>
+                </label>
+                <label>Seat Number
+                    <input id="seatNumber" type="number" min="1" required>
+                </label>
+                <label>Passenger Age
+                    <input id="age" type="number" min="1" max="120" required>
+                </label>
+            </div>
+            <button type="submit">Book Ticket</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <div class="section-heading">
+            <div>
+                <p class="tag">RESERVATIONS</p>
+                <h2>Current Bookings</h2>
+            </div>
+            <button class="secondary" id="clearAll" type="button">Clear Demo Data</button>
+        </div>
+
+        <div id="message" class="message hidden"></div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Passenger ID</th>
+                        <th>Train No.</th>
+                        <th>Seat</th>
+                        <th>Age</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="reservationBody"></tbody>
+            </table>
+        </div>
+        <p id="emptyState" class="empty">No active reservations yet.</p>
+    </section>
+
+    <footer>
+        <p>Frontend demonstration of the Railway Reservation System</p>
+        <p class="small">The C project uses <code>reservations.txt</code> for file storage.</p>
+    </footer>
+</main>
+
+<script>
+const form = document.getElementById("bookingForm");
+const body = document.getElementById("reservationBody");
+const emptyState = document.getElementById("emptyState");
+const message = document.getElementById("message");
+const clearAll = document.getElementById("clearAll");
+
+let reservations = JSON.parse(localStorage.getItem("railwayReservations")) || [];
+
+function save() {
+    localStorage.setItem("railwayReservations", JSON.stringify(reservations));
+}
+
+function showMessage(text, type = "success") {
+    message.textContent = text;
+    message.className = "message " + type;
+}
+
+function render() {
+    body.innerHTML = "";
+
+    if (reservations.length === 0) {
+        emptyState.style.display = "block";
+        return;
+    }
+
+    emptyState.style.display = "none";
+
+    reservations.forEach((r, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${r.passengerID}</td>
+            <td>${r.trainNumber}</td>
+            <td>${r.seatNumber}</td>
+            <td>${r.age}</td>
+            <td><span class="status">Booked</span></td>
+            <td><button class="cancel" type="button" onclick="cancelTicket(${index})">Cancel</button></td>
+        `;
+        body.appendChild(row);
+    });
+}
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const passengerID = Number(document.getElementById("passengerID").value);
+    const trainNumber = Number(document.getElementById("trainNumber").value);
+    const seatNumber = Number(document.getElementById("seatNumber").value);
+    const age = Number(document.getElementById("age").value);
+
+    if (passengerID <= 0 || trainNumber <= 0 || seatNumber <= 0 || age <= 0 || age > 120) {
+        showMessage("Please enter valid values.", "error");
+        return;
+    }
+
+    const duplicate = reservations.some(r =>
+        r.passengerID === passengerID &&
+        r.trainNumber === trainNumber &&
+        r.seatNumber === seatNumber
+    );
+
+    if (duplicate) {
+        showMessage("This reservation already exists.", "error");
+        return;
+    }
+
+    reservations.push({
+        passengerID: passengerID,
+        trainNumber: trainNumber,
+        seatNumber: seatNumber,
+        age: age,
+        status: 1
+    });
+
+    save();
+    render();
+    form.reset();
+    showMessage("Ticket booked successfully.");
+});
+
+function cancelTicket(index) {
+    reservations.splice(index, 1);
+    save();
+    render();
+    showMessage("Ticket cancelled successfully.");
+}
+
+clearAll.addEventListener("click", function() {
+    reservations = [];
+    save();
+    render();
+    showMessage("Demo reservations cleared.");
+});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --background: #f5f7fb;
+    --card: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --accent: #2563eb;
+    --accent-dark: #1d4ed8;
+    --border: #e5e7eb;
+    --success: #15803d;
+    --danger: #dc2626;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+.container {
+    width: min(1000px, 92%);
+    margin: auto;
+    padding: 55px 0;
+}
+
+.hero {
+    margin-bottom: 30px;
+}
+
+.tag {
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: clamp(38px, 7vw, 64px);
+    line-height: 1;
+    letter-spacing: -2px;
+    margin-bottom: 17px;
+}
+
+.hero > p:not(.tag) {
+    max-width: 720px;
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: 0 12px 35px rgba(17, 24, 39, 0.06);
+}
+
+h2 {
+    font-size: 25px;
+    margin-bottom: 22px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+input {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    padding: 14px 15px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    background: #fafafa;
+    color: var(--text);
+    font-size: 16px;
+}
+
+input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 20px;
+    background: var(--accent);
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+button:hover {
+    background: var(--accent-dark);
+    transform: translateY(-1px);
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.section-heading h2 {
+    margin-bottom: 0;
+}
+
+.secondary {
+    margin-top: 0;
+    background: #111827;
+}
+
+.secondary:hover {
+    background: #000000;
+}
+
+.message {
+    margin: 20px 0;
+    padding: 13px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.message.success {
+    background: #dcfce7;
+    color: var(--success);
+}
+
+.message.error {
+    background: #fee2e2;
+    color: var(--danger);
+}
+
+.hidden {
+    display: none;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    margin-top: 24px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 15px 10px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+th {
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #dcfce7;
+    color: var(--success);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.cancel {
+    margin: 0;
+    padding: 8px 12px;
+    background: #fee2e2;
+    color: var(--danger);
+    font-size: 12px;
+}
+
+.cancel:hover {
+    background: #fecaca;
+}
+
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 35px 10px 10px;
+}
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+footer .small {
+    font-size: 12px;
+}
+
+code {
+    background: #e5e7eb;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+@media (max-width: 650px) {
+    .container {
+        padding: 35px 0;
+    }
+
+    .card {
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .secondary {
+        width: 100%;
+    }
+
+    h1 {
+        letter-spacing: -1px;
+    }
+}
